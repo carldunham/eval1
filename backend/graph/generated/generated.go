@@ -83,6 +83,7 @@ type ComplexityRoot struct {
 
 	VitalSigns struct {
 		BloodPressure    func(childComplexity int) int
+		BloodSugar       func(childComplexity int) int
 		HeartRate        func(childComplexity int) int
 		OxygenSaturation func(childComplexity int) int
 		RespiratoryRate  func(childComplexity int) int
@@ -294,6 +295,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.VitalSigns.BloodPressure(childComplexity), true
 
+	case "VitalSigns.bloodSugar":
+		if e.complexity.VitalSigns.BloodSugar == nil {
+			break
+		}
+
+		return e.complexity.VitalSigns.BloodSugar(childComplexity), true
+
 	case "VitalSigns.heartRate":
 		if e.complexity.VitalSigns.HeartRate == nil {
 			break
@@ -432,6 +440,7 @@ var sources = []*ast.Source{
   temperature: Float
   respiratoryRate: Int
   oxygenSaturation: Int
+  bloodSugar: Int
 }
 
 type OASISElement {
@@ -1578,6 +1587,8 @@ func (ec *executionContext) fieldContext_VisitSummary_vitalSigns(_ context.Conte
 				return ec.fieldContext_VitalSigns_respiratoryRate(ctx, field)
 			case "oxygenSaturation":
 				return ec.fieldContext_VitalSigns_oxygenSaturation(ctx, field)
+			case "bloodSugar":
+				return ec.fieldContext_VitalSigns_bloodSugar(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type VitalSigns", field.Name)
 		},
@@ -2027,6 +2038,47 @@ func (ec *executionContext) _VitalSigns_oxygenSaturation(ctx context.Context, fi
 }
 
 func (ec *executionContext) fieldContext_VitalSigns_oxygenSaturation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "VitalSigns",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _VitalSigns_bloodSugar(ctx context.Context, field graphql.CollectedField, obj *model.VitalSigns) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_VitalSigns_bloodSugar(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BloodSugar, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int32)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint32(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_VitalSigns_bloodSugar(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "VitalSigns",
 		Field:      field,
@@ -4265,6 +4317,8 @@ func (ec *executionContext) _VitalSigns(ctx context.Context, sel ast.SelectionSe
 			out.Values[i] = ec._VitalSigns_respiratoryRate(ctx, field, obj)
 		case "oxygenSaturation":
 			out.Values[i] = ec._VitalSigns_oxygenSaturation(ctx, field, obj)
+		case "bloodSugar":
+			out.Values[i] = ec._VitalSigns_bloodSugar(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

@@ -41,4 +41,5 @@ type VitalSigns struct {
 	Temperature      *float64 `json:"temperature,omitempty"`
 	RespiratoryRate  *int32   `json:"respiratoryRate,omitempty"`
 	OxygenSaturation *int32   `json:"oxygenSaturation,omitempty"`
+	BloodSugar       *int32   `json:"bloodSugar,omitempty"`
 }

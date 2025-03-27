@@ -21,6 +21,7 @@ func TestAnalyzeTranscript(t *testing.T) {
 		wantTemp   float64
 		wantRR     int32
 		wantO2     int32
+		wantBS     int32
 		wantType   string
 		wantM0069  string
 		wantM0102  string
@@ -40,12 +41,13 @@ func TestAnalyzeTranscript(t *testing.T) {
 	}{
 		{
 			name:       "Complete vital signs and OASIS elements",
-			transcript: "Patient presented with BP 120/80, HR: 72, Temp: 98.6, RR: 16, O2 Sat: 98. Follow-up visit. Patient lives alone in a single-family home. Primary language is English. Patient is Caucasian. Current health status is stable. High risk for hospitalization due to recent surgery. Moderate risk for falls.",
+			transcript: "Patient presented with BP 120/80, HR: 72, Temp: 98.6, RR: 16, O2 Sat: 98, Blood Sugar: 95. Follow-up visit. Patient lives alone in a single-family home. Primary language is English. Patient is Caucasian. Current health status is stable. High risk for hospitalization due to recent surgery. Moderate risk for falls.",
 			wantBP:     "120/80",
 			wantHR:     72,
 			wantTemp:   98.6,
 			wantRR:     16,
 			wantO2:     98,
+			wantBS:     95,
 			wantType:   "Follow-up",
 			wantM0069:  "Alone",
 			wantM0102:  "English",
@@ -65,9 +67,10 @@ func TestAnalyzeTranscript(t *testing.T) {
 		},
 		{
 			name:       "Partial vital signs and OASIS elements",
-			transcript: "Patient presented with BP 140/90, HR: 85. Start of care visit. Patient lives with family. Primary language is Spanish. Patient is Hispanic. Current health status is declining. High risk for pressure ulcers.",
+			transcript: "Patient presented with BP 140/90, HR: 85, Blood Sugar: 180. Start of care visit. Patient lives with family. Primary language is Spanish. Patient is Hispanic. Current health status is declining. High risk for pressure ulcers.",
 			wantBP:     "140/90",
 			wantHR:     85,
+			wantBS:     180,
 			wantType:   "SOC",
 			wantM0069:  "With family",
 			wantM0102:  "Spanish",
@@ -98,12 +101,14 @@ func TestAnalyzeTranscript(t *testing.T) {
 						Temperature      *float64 `json:"temperature"`
 						RespiratoryRate  *int     `json:"respiratoryRate"`
 						OxygenSaturation *int     `json:"oxygenSaturation"`
+						BloodSugar       *int     `json:"bloodSugar"`
 					}{
 						BloodPressure:    &tt.wantBP,
 						HeartRate:        intPtr(int(tt.wantHR)),
 						Temperature:      floatPtr(tt.wantTemp),
 						RespiratoryRate:  intPtr(int(tt.wantRR)),
 						OxygenSaturation: intPtr(int(tt.wantO2)),
+						BloodSugar:       intPtr(int(tt.wantBS)),
 					},
 					OasisElements: struct {
 						M0069 *string `json:"m0069"`
@@ -162,6 +167,9 @@ func TestAnalyzeTranscript(t *testing.T) {
 			}
 			if got.VitalSigns.OxygenSaturation != nil && *got.VitalSigns.OxygenSaturation != tt.wantO2 {
 				t.Errorf("OxygenSaturation = %v, want %v", *got.VitalSigns.OxygenSaturation, tt.wantO2)
+			}
+			if got.VitalSigns.BloodSugar != nil && *got.VitalSigns.BloodSugar != tt.wantBS {
+				t.Errorf("BloodSugar = %v, want %v", *got.VitalSigns.BloodSugar, tt.wantBS)
 			}
 			if got.VisitType != tt.wantType {
 				t.Errorf("VisitType = %v, want %v", got.VisitType, tt.wantType)

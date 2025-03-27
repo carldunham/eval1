@@ -27,7 +27,7 @@ func (s *Service) AnalyzeTranscript(ctx context.Context, transcript string) (*mo
 	}
 
 	// Convert int to int32 for the model
-	var heartRate, respiratoryRate, oxygenSaturation *int32
+	var heartRate, respiratoryRate, oxygenSaturation, bloodSugar *int32
 	if extractedData.VitalSigns.HeartRate != nil {
 		hr := int32(*extractedData.VitalSigns.HeartRate)
 		heartRate = &hr
@@ -40,6 +40,10 @@ func (s *Service) AnalyzeTranscript(ctx context.Context, transcript string) (*mo
 		o2 := int32(*extractedData.VitalSigns.OxygenSaturation)
 		oxygenSaturation = &o2
 	}
+	if extractedData.VitalSigns.BloodSugar != nil {
+		bs := int32(*extractedData.VitalSigns.BloodSugar)
+		bloodSugar = &bs
+	}
 
 	// Create visit summary from extracted data
 	summary := &model.VisitSummary{
@@ -49,6 +53,7 @@ func (s *Service) AnalyzeTranscript(ctx context.Context, transcript string) (*mo
 			Temperature:      extractedData.VitalSigns.Temperature,
 			RespiratoryRate:  respiratoryRate,
 			OxygenSaturation: oxygenSaturation,
+			BloodSugar:       bloodSugar,
 		},
 		OasisElements: &model.OASISElement{
 			M0069: extractedData.OasisElements.M0069,

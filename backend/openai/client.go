@@ -43,6 +43,7 @@ type ExtractedData struct {
 		Temperature      *float64 `json:"temperature"`
 		RespiratoryRate  *int     `json:"respiratoryRate"`
 		OxygenSaturation *int     `json:"oxygenSaturation"`
+		BloodSugar       *int     `json:"bloodSugar"`
 	} `json:"vitalSigns"`
 	OasisElements struct {
 		M0069 *string `json:"m0069"` // Patient's Living Situation
@@ -85,7 +86,8 @@ Format the response as a JSON object with the following structure:
     "heartRate": "number or null",
     "temperature": "number or null",
     "respiratoryRate": "number or null",
-    "oxygenSaturation": "number or null"
+    "oxygenSaturation": "number or null",
+    "bloodSugar": "number or null"
   },
   "oasisElements": {
     "m0069": "string or null (Patient's Living Situation)",

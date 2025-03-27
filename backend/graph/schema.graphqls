@@ -4,6 +4,7 @@ type VitalSigns {
   temperature: Float
   respiratoryRate: Int
   oxygenSaturation: Int
+  bloodSugar: Int
 }
 
 type OASISElement {

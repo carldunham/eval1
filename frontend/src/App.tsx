@@ -25,6 +25,7 @@ const ANALYZE_TRANSCRIPT = gql`
         temperature
         respiratoryRate
         oxygenSaturation
+        bloodSugar
       }
       oasisElements {
         m0069
@@ -150,6 +151,14 @@ function TranscriptAnalyzer() {
                     </Typography>
                     <Typography component="dd">
                       {data.processTranscript.vitalSigns.oxygenSaturation || 'N/A'}%
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                      Blood Sugar:
+                    </Typography>
+                    <Typography component="dd">
+                      {data.processTranscript.vitalSigns.bloodSugar || 'N/A'} mg/dL
                     </Typography>
                   </Box>
                 </Box>
