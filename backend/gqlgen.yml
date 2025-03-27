@@ -4,8 +4,8 @@ schema:
 
 # Where should the generated server code go?
 exec:
-  filename: graph/generated.go
-  package: graph
+  filename: graph/generated/generated.go
+  package: generated
 
 # Where should any generated models go?
 model:
@@ -14,9 +14,10 @@ model:
 
 # Where should the resolver implementations go?
 resolver:
-  layout: single-file
-  filename: graph/resolver.go
+  layout: follow-schema
+  dir: graph
   package: graph
+  filename_template: "{name}.resolvers.go"
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
 # struct_tag: json
@@ -83,7 +84,7 @@ call_argument_directives_with_null: true
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
 autobind:
-  - "nestmed/eval1/backend/graph/model"
+  - "github.com/carldunham/nestmed/eval1/backend/graph/model"
 
 # This section declares type mapping between the GraphQL and go type systems
 #
