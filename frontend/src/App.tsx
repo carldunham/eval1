@@ -186,6 +186,146 @@ function TranscriptAnalyzer() {
                   </Box>
                 </Box>
               </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" gutterBottom>
+                  OASIS Elements
+                </Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Box component="dl">
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Living Situation (M0069):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m0069 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Primary Language (M0102):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m0102 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Ethnicity (M0110):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m0110 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Race (M0140):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m0140 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Health Status (M0150):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m0150 || 'N/A'}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Box component="dl">
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Hospitalization Risk (M1030):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1030 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Death Risk (M1033):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1033 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Pressure Ulcer Risk (M1034):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1034 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Falls Risk (M1036):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1036 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Depression Risk (M1040):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1040 || 'N/A'}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Box component="dl">
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Weight Loss Risk (M1046):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1046 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Pressure Ulcer Risk (M1051):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1051 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Falls Risk (M1056):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1056 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Depression Risk (M1058):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1058 || 'N/A'}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', mb: 1 }}>
+                        <Typography component="dt" sx={{ fontWeight: 'bold', mr: 1 }}>
+                          Weight Loss Risk (M1060):
+                        </Typography>
+                        <Typography component="dd">
+                          {data.processTranscript.oasisElements.m1060 || 'N/A'}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
           </Paper>
         )}

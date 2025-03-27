@@ -1,7 +1,13 @@
 package graph
 
-// This file will not be regenerated automatically.
-//
-// It serves as dependency injection for your app, add any dependencies you require here.
+type Resolver struct {
+	service *Service
+}
 
-type Resolver struct{}
+func NewResolver() (*Resolver, error) {
+	service, err := NewService()
+	if err != nil {
+		return nil, err
+	}
+	return &Resolver{service: service}, nil
+}

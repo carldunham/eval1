@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/carldunham/nestmed/eval1/backend/graph"
@@ -22,10 +21,14 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	resolver, err := graph.NewResolver()
+	if err != nil {
+		log.Fatalf("Failed to create resolver: %v", err)
+	}
+
+	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: resolver}))
 	srv.AddTransport(&transport.POST{})
 	srv.AddTransport(&transport.Websocket{})
-	srv.Use(extension.Introspection{})
 
 	// Create a new mux router
 	mux := http.NewServeMux()
