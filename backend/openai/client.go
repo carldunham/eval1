@@ -5,8 +5,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 const (
@@ -113,7 +115,7 @@ Transcript:
 ` + transcript
 
 	reqBody := Request{
-		Model: "gpt-4",
+		Model: "gpt-4-0125-preview",
 		Messages: []Message{
 			{
 				Role:    "system",
@@ -146,12 +148,13 @@ Transcript:
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("API request failed with status: %d", resp.StatusCode)
+		body, _ := io.ReadAll(resp.Body)
+		return nil, fmt.Errorf("API request failed with status: %d, body: %s", resp.StatusCode, string(body))
 	}
 
 	var apiResp Response
 	if err := json.NewDecoder(resp.Body).Decode(&apiResp); err != nil {
-		return nil, fmt.Errorf("error decoding response: %w", err)
+		return nil, fmt.Errorf("error decoding API response: %w", err)
 	}
 
 	if len(apiResp.Choices) == 0 {
@@ -159,8 +162,19 @@ Transcript:
 	}
 
 	var extractedData ExtractedData
-	if err := json.Unmarshal([]byte(apiResp.Choices[0].Message.Content), &extractedData); err != nil {
-		return nil, fmt.Errorf("error parsing extracted data: %w", err)
+	content := apiResp.Choices[0].Message.Content
+
+	// Strip markdown code blocks if present
+	if len(content) >= 7 && content[:7] == "```json" {
+		content = content[7:]
+	}
+	if len(content) >= 3 && content[len(content)-3:] == "```" {
+		content = content[:len(content)-3]
+	}
+	content = strings.TrimSpace(content)
+
+	if err := json.Unmarshal([]byte(content), &extractedData); err != nil {
+		return nil, fmt.Errorf("error parsing extracted data: %w\nContent received: %s", err, content)
 	}
 
 	return &extractedData, nil
