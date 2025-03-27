@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:8080/query',
+  uri: 'http://localhost:8085/query',
   cache: new InMemoryCache(),
 });
 
