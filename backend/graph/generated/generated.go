@@ -75,6 +75,7 @@ type ComplexityRoot struct {
 	VisitSummary struct {
 		Notes         func(childComplexity int) int
 		OasisElements func(childComplexity int) int
+		Summary       func(childComplexity int) int
 		VisitDate     func(childComplexity int) int
 		VisitDuration func(childComplexity int) int
 		VisitType     func(childComplexity int) int
@@ -259,6 +260,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.VisitSummary.OasisElements(childComplexity), true
+
+	case "VisitSummary.summary":
+		if e.complexity.VisitSummary.Summary == nil {
+			break
+		}
+
+		return e.complexity.VisitSummary.Summary(childComplexity), true
 
 	case "VisitSummary.visitDate":
 		if e.complexity.VisitSummary.VisitDate == nil {
@@ -468,6 +476,7 @@ type VisitSummary {
   visitType: String!
   visitDuration: Int!
   notes: String
+  summary: String
 }
 
 type Query {
@@ -705,6 +714,8 @@ func (ec *executionContext) fieldContext_Mutation_processTranscript(ctx context.
 				return ec.fieldContext_VisitSummary_visitDuration(ctx, field)
 			case "notes":
 				return ec.fieldContext_VisitSummary_notes(ctx, field)
+			case "summary":
+				return ec.fieldContext_VisitSummary_summary(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type VisitSummary", field.Name)
 		},
@@ -1389,6 +1400,8 @@ func (ec *executionContext) fieldContext_Query_analyzeTranscript(ctx context.Con
 				return ec.fieldContext_VisitSummary_visitDuration(ctx, field)
 			case "notes":
 				return ec.fieldContext_VisitSummary_notes(ctx, field)
+			case "summary":
+				return ec.fieldContext_VisitSummary_summary(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type VisitSummary", field.Name)
 		},
@@ -1833,6 +1846,47 @@ func (ec *executionContext) _VisitSummary_notes(ctx context.Context, field graph
 }
 
 func (ec *executionContext) fieldContext_VisitSummary_notes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "VisitSummary",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _VisitSummary_summary(ctx context.Context, field graphql.CollectedField, obj *model.VisitSummary) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_VisitSummary_summary(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (any, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Summary, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_VisitSummary_summary(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "VisitSummary",
 		Field:      field,
@@ -4273,6 +4327,8 @@ func (ec *executionContext) _VisitSummary(ctx context.Context, sel ast.Selection
 			}
 		case "notes":
 			out.Values[i] = ec._VisitSummary_notes(ctx, field, obj)
+		case "summary":
+			out.Values[i] = ec._VisitSummary_summary(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

@@ -65,6 +65,7 @@ type ExtractedData struct {
 		M1060 *string `json:"m1060"` // Risk for Weight Loss
 	} `json:"oasisElements"`
 	VisitType *string `json:"visitType"`
+	Summary   *string `json:"summary"`
 }
 
 func NewClient() (*Client, error) {
@@ -108,7 +109,8 @@ Format the response as a JSON object with the following structure:
     "m1058": "string or null (Risk for Depression)",
     "m1060": "string or null (Risk for Weight Loss)"
   },
-  "visitType": "string or null (one of: 'SOC', 'Follow-up', 'Recertification', 'Discharge')"
+  "visitType": "string or null (one of: 'SOC', 'Follow-up', 'Recertification', 'Discharge')",
+  "summary": "string (A concise summary of the visit, including key findings, concerns, and recommendations based on the vital signs and OASIS elements)"
 }
 
 Transcript:

@@ -76,6 +76,7 @@ func (s *Service) AnalyzeTranscript(ctx context.Context, transcript string) (*mo
 		VisitType:     getVisitType(extractedData.VisitType),
 		VisitDuration: 60, // Default duration in minutes
 		Notes:         &transcript,
+		Summary:       extractedData.Summary,
 	}
 
 	return summary, nil

@@ -1,2 +1,1 @@
 - Stablize go.mod and gqlgen
-- Use llm to parse transcript, not regex

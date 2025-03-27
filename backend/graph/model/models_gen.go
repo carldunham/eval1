@@ -33,6 +33,7 @@ type VisitSummary struct {
 	VisitType     string        `json:"visitType"`
 	VisitDuration int32         `json:"visitDuration"`
 	Notes         *string       `json:"notes,omitempty"`
+	Summary       *string       `json:"summary,omitempty"`
 }
 
 type VitalSigns struct {

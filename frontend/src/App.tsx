@@ -48,6 +48,7 @@ const ANALYZE_TRANSCRIPT = gql`
       visitType
       visitDuration
       notes
+      summary
     }
   }
 `;
@@ -336,6 +337,19 @@ function TranscriptAnalyzer() {
                 </Grid>
               </Grid>
             </Grid>
+
+            {data.processTranscript.summary && (
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Visit Summary
+                </Typography>
+                <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
+                  <Typography>
+                    {data.processTranscript.summary}
+                  </Typography>
+                </Paper>
+              </Box>
+            )}
           </Paper>
         )}
       </Box>
